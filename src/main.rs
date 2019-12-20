@@ -26,10 +26,10 @@ fn main() {
 
 fn print_lines_containing(pattern: &String, file: File) -> String {
     let reader = BufReader::new(file);
-    let strings: Vec<String> = reader.lines()
-        .map(|line_result| line_result.unwrap())
+    let matching_strings: Vec<String> = reader.lines()
+        .map(Result::unwrap)
         .filter(|line| line.contains(pattern))
         .collect();
 
-    strings.join("\n")
+    matching_strings.join("\n")
 }
