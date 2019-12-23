@@ -3,6 +3,7 @@ use std::io::{BufRead, BufReader};
 
 use structopt::StructOpt;
 
+
 /// Search for a pattern in a file and display the lines that contain it.
 #[derive(StructOpt)]
 struct Cli {
@@ -43,14 +44,14 @@ mod tests {
     #[test]
     fn empty_file() {
         let mut reader = io::Cursor::new(b"");
-        let lines_containing = get_lines_containing(&String::from(""), &mut reader);
+        let lines_containing = get_lines_containing(&String::from("nothing"), &mut reader);
         assert_eq!(lines_containing, "");
     }
 
     #[test]
     fn std() {
-        let mut reader = io::Cursor::new(b"line1 coucou\nline2 bibu");
-        let lines_containing = get_lines_containing(&String::from("line1"), &mut reader);
-        assert_eq!(lines_containing, "line1 coucou");
+        let mut reader = io::Cursor::new(b"line1 coucou\nline2 bibu\nline3");
+        let lines_containing = get_lines_containing(&String::from("bi"), &mut reader);
+        assert_eq!(lines_containing, "line2 bibu");
     }
 }
